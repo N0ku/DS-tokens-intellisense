@@ -2,7 +2,7 @@
   "name": "ds-tokens-intellisense",
   "displayName": "DS Tokens IntelliSense",
   "description": "IntelliSense pour les design tokens DTCG : diagnostics (références cassées par thème, couleurs invalides, cycles), complétion, hover, navigation et couleurs, dans les JSON de tokens et le CSS",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "n0ku",
   "license": "MIT",
   "icon": "assets/imgs/DS-logo.png",
@@ -23,8 +23,14 @@
     "design system",
     "theme"
   ],
-  "engines": { "vscode": "^1.90.0" },
-  "categories": ["Linters", "Programming Languages", "Visualization"],
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Linters",
+    "Programming Languages",
+    "Visualization"
+  ],
   "pricing": "Free",
   "galleryBanner": {
     "color": "#0d1117",
@@ -38,20 +44,50 @@
   ],
   "contributes": {
     "semanticTokenTypes": [
-      { "id": "dsGroup", "superType": "namespace", "description": "Nom de groupe de tokens (color, space, …)" },
-      { "id": "dsToken", "superType": "property", "description": "Nom d'un token (objet portant $value)" },
-      { "id": "dsValueKey", "superType": "keyword", "description": "La clé $value" },
-      { "id": "dsTypeKey", "superType": "type", "description": "Les clés $type, $description, …" },
-      { "id": "dsAlias", "superType": "macro", "description": "Référence {x.y.z} dans un $value" }
+      {
+        "id": "dsGroup",
+        "superType": "namespace",
+        "description": "Nom de groupe de tokens (color, space, …)"
+      },
+      {
+        "id": "dsToken",
+        "superType": "property",
+        "description": "Nom d'un token (objet portant $value)"
+      },
+      {
+        "id": "dsValueKey",
+        "superType": "keyword",
+        "description": "La clé $value"
+      },
+      {
+        "id": "dsTypeKey",
+        "superType": "type",
+        "description": "Les clés $type, $description, …"
+      },
+      {
+        "id": "dsAlias",
+        "superType": "macro",
+        "description": "Référence {x.y.z} dans un $value"
+      }
     ],
     "semanticTokenScopes": [
       {
         "scopes": {
-          "dsGroup": ["entity.name.namespace"],
-          "dsToken": ["entity.name.function"],
-          "dsValueKey": ["keyword.control"],
-          "dsTypeKey": ["storage.type"],
-          "dsAlias": ["variable.other.enummember"]
+          "dsGroup": [
+            "entity.name.namespace"
+          ],
+          "dsToken": [
+            "entity.name.function"
+          ],
+          "dsValueKey": [
+            "keyword.control"
+          ],
+          "dsTypeKey": [
+            "storage.type"
+          ],
+          "dsAlias": [
+            "variable.other.enummember"
+          ]
         }
       }
     ],
