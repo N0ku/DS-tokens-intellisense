@@ -1,0 +1,78 @@
+{
+  "space": {
+    "100": {
+      "$value": "4px",
+      "$type": "dimension"
+    },
+    "200": {
+      "$value": "8px",
+      "$type": "dimension"
+    },
+    "300": {
+      "$value": "12px",
+      "$type": "dimension"
+    },
+    "400": {
+      "$value": "16px",
+      "$type": "dimension"
+    },
+    "600": {
+      "$value": "24px",
+      "$type": "dimension"
+    }
+  },
+  "radius": {
+    "sm": {
+      "$value": "4px",
+      "$type": "dimension"
+    },
+    "md": {
+      "$value": "8px",
+      "$type": "dimension"
+    },
+    "full": {
+      "$value": "999px",
+      "$type": "dimension"
+    }
+  },
+  "font": {
+    "size": {
+      "body": {
+        "$value": "16px",
+        "$type": "dimension"
+      },
+      "label": {
+        "$value": "14px",
+        "$type": "dimension"
+      }
+    },
+    "weight": {
+      "regular": {
+        "$value": "400",
+        "$type": "fontWeight"
+      },
+      "medium": {
+        "$value": "500",
+        "$type": "fontWeight"
+      }
+    }
+  },
+  "border": {
+    "width": {
+      "thin": {
+        "$value": "1px",
+        "$type": "dimension"
+      },
+      "focus": {
+        "$value": "2px",
+        "$type": "dimension"
+      }
+    }
+  },
+  "layout": {
+    "content-max": {
+      "$value": "640px",
+      "$type": "dimension"
+    }
+  }
+}

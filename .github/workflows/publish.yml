@@ -1,0 +1,61 @@
+name: Publish to Marketplace
+
+# Publication sans PAT : identité managée Azure + OIDC fédéré (environnement
+# marketplace-publish). Rien à faire tourner ni à faire expirer.
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: marketplace-publish
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Vérifier que le tag correspond à la version du package.json
+        run: |
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          PKG_VERSION="$(node -p "require('./package.json').version")"
+          if [ "$TAG_VERSION" != "$PKG_VERSION" ]; then
+            echo "::error::Tag v$TAG_VERSION ≠ package.json $PKG_VERSION — bump la version avant de tagger."
+            exit 1
+          fi
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Tests unitaires
+        run: npm test
+
+      - name: Bundle esbuild
+        run: npm run build
+
+      - name: Packager le .vsix
+        run: npx @vscode/vsce package
+
+      - name: Azure login (OIDC, aucun secret sensible)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          allow-no-subscriptions: true
+
+      - name: Publier sur le Marketplace
+        run: npx @vscode/vsce publish --packagePath *.vsix --skip-duplicate --azure-credential
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vsix-${{ github.ref_name }}
+          path: '*.vsix'

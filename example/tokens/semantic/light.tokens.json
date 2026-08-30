@@ -1,0 +1,24 @@
+{
+  "color": {
+    "surface": {
+      "page":  { "$value": "{color.gray.50}", "$type": "color" },
+      "card":  { "$value": "{color.gray.0}",  "$type": "color" }
+    },
+    "content": {
+      "primary":   { "$value": "{color.gray.900}", "$type": "color" },
+      "secondary": { "$value": "{color.gray.600}", "$type": "color" },
+      "on-action": { "$value": "{color.gray.0}",   "$type": "color" }
+    },
+    "action": {
+      "primary":       { "$value": "{color.blue.600}", "$type": "color" },
+      "primary-hover": { "$value": "{color.blue.800}", "$type": "color" },
+      "subtle":        { "$value": "{color.blue.50}",  "$type": "color" }
+    },
+    "border": {
+      "default": { "$value": "{color.gray.200}", "$type": "color" }
+    },
+    "feedback": {
+      "danger": { "$value": "{color.red.600}", "$type": "color" }
+    }
+  }
+}

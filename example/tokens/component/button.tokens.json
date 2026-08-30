@@ -1,0 +1,23 @@
+{
+  "button": {
+    "primary": {
+      "background":       { "$value": "{color.action.primary}", "$type": "color" },
+      "background-hover": { "$value": "{color.action.primary-hover}", "$type": "color" },
+      "text":             { "$value": "{color.content.on-action}", "$type": "color" }
+    },
+    "secondary": {
+      "background": { "$value": "{color.surface.card}", "$type": "color" },
+      "text":       { "$value": "{color.action.primary}", "$type": "color" },
+      "border":     { "$value": "{color.border.default}", "$type": "color" }
+    },
+    "disabled": {
+      "background": { "$value": "{color.surface.card}", "$type": "color" },
+      "text":       { "$value": "{color.content.primary}", "$type": "color" },
+      "border":     { "$value": "{color.border.default}", "$type": "color" }
+    },
+    "padding-x": { "$value": "{space.400}", "$type": "dimension" },
+    "padding-y": { "$value": "{space.300}", "$type": "dimension" },
+    "radius":    { "$value": "{radius.md}", "$type": "dimension" },
+    "font-size": { "$value": "{font.size.label}", "$type": "dimension" }
+  }
+}

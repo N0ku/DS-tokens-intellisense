@@ -1,0 +1,32 @@
+name: Bootstrap identity (one-time)
+
+# À lancer UNE FOIS après avoir créé l'identité managée et les secrets :
+# affiche l'id de profil Azure DevOps de l'identité — le seul identifiant
+# que la recherche « Add member » du portail publisher reconnaît.
+# Supprimable une fois l'identité ajoutée au publisher.
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    environment: marketplace-publish
+    steps:
+      - name: Azure login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          allow-no-subscriptions: true
+
+      - name: Créer/afficher le profil Azure DevOps de l'identité
+        run: |
+          az rest -u https://app.vssps.visualstudio.com/_apis/profile/profiles/me \
+            --resource 499b84ac-1321-427f-aa17-267ca6975798
+          echo ""
+          echo "→ Copie le champ \"id\" ci-dessus et ajoute-le comme membre du publisher"
+          echo "  sur https://marketplace.visualstudio.com/manage"

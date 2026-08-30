@@ -1,0 +1,86 @@
+{
+  "name": "ds-tokens-intellisense",
+  "displayName": "DS Tokens IntelliSense",
+  "description": "Diagnostics, complétion, hover et navigation pour les design tokens DTCG (références cassées par thème, couleurs invalides, cycles) — côté JSON et côté CSS",
+  "version": "0.1.0",
+  "publisher": "n0ku",
+  "license": "MIT",
+  "icon": "assets/imgs/DS-logo.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/N0ku/DS-tokens-intellisense"
+  },
+  "bugs": {
+    "url": "https://github.com/N0ku/DS-tokens-intellisense/issues"
+  },
+  "homepage": "https://github.com/N0ku/DS-tokens-intellisense#readme",
+  "keywords": [
+    "design tokens",
+    "dtcg",
+    "style-dictionary",
+    "css variables",
+    "custom properties",
+    "design system",
+    "theme"
+  ],
+  "engines": { "vscode": "^1.90.0" },
+  "categories": ["Linters", "Programming Languages"],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "workspaceContains:tokens/**/*.json",
+    "onLanguage:css",
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "semanticTokenTypes": [
+      { "id": "dsGroup", "superType": "namespace", "description": "Nom de groupe de tokens (color, space, …)" },
+      { "id": "dsToken", "superType": "property", "description": "Nom d'un token (objet portant $value)" },
+      { "id": "dsValueKey", "superType": "keyword", "description": "La clé $value" },
+      { "id": "dsTypeKey", "superType": "type", "description": "Les clés $type, $description, …" },
+      { "id": "dsAlias", "superType": "macro", "description": "Référence {x.y.z} dans un $value" }
+    ],
+    "semanticTokenScopes": [
+      {
+        "scopes": {
+          "dsGroup": ["entity.name.namespace"],
+          "dsToken": ["entity.name.function"],
+          "dsValueKey": ["keyword.control"],
+          "dsTypeKey": ["storage.type"],
+          "dsAlias": ["variable.other.enummember"]
+        }
+      }
+    ],
+    "configuration": {
+      "title": "DS Tokens",
+      "properties": {
+        "dsTokens.tokensGlob": {
+          "type": "string",
+          "default": "tokens/**/*.json",
+          "description": "Glob des fichiers de design tokens, relatif à la racine du workspace."
+        },
+        "dsTokens.nameHighlights": {
+          "type": "boolean",
+          "default": true,
+          "description": "Surligner le nom des tokens couleur avec leur couleur résolue."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test \"test/**/*.test.ts\"",
+    "package": "vsce package"
+  },
+  "dependencies": {
+    "jsonc-parser": "^3.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/vscode": "^1.90.0",
+    "@vscode/vsce": "^3.0.0",
+    "esbuild": "^0.25.0",
+    "typescript": "^5.6.0"
+  }
+}
