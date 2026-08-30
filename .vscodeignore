@@ -8,3 +8,4 @@ example/**
 esbuild.mjs
 tsconfig.json
 **/*.map
+assets/screenshots/**
