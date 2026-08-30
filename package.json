@@ -2,7 +2,7 @@
   "name": "ds-tokens-intellisense",
   "displayName": "DS Tokens IntelliSense",
   "description": "IntelliSense pour les design tokens DTCG : diagnostics (références cassées par thème, couleurs invalides, cycles), complétion, hover, navigation et couleurs, dans les JSON de tokens et le CSS",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "n0ku",
   "license": "MIT",
   "icon": "assets/imgs/DS-logo.png",
