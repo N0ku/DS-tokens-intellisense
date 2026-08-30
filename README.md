@@ -52,25 +52,6 @@ Le modèle reflète un build Style Dictionary multi-thèmes : les couches core e
 | `dsTokens.tokensGlob` | `tokens/**/*.json` | Où trouver les fichiers de tokens |
 | `dsTokens.nameHighlights` | `true` | Surligner le nom des tokens couleur avec leur couleur |
 
-## Développement
-
-```bash
-npm install
-npm run build      # bundle esbuild vers dist/extension.js
-npm test           # tests du résolveur, pur Node (node --test)
-```
-
-F5 dans VS Code ouvre une fenêtre Extension Development Host sur le workspace [example/](example/), qui contient un jeu de tokens de démonstration.
-
-## Release
-
-La publication sur le Marketplace est automatisée ([publish.yml](.github/workflows/publish.yml)) via une identité managée Azure et OIDC fédéré, sans PAT ni secret qui expire :
-
-```bash
-npm version minor          # bump package.json + tag vX.Y.Z
-git push && git push --tags
-```
-
 ## Licence
 
 [MIT](LICENSE)
