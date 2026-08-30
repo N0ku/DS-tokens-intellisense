@@ -1,7 +1,7 @@
 {
   "name": "ds-tokens-intellisense",
   "displayName": "DS Tokens IntelliSense",
-  "description": "Diagnostics, complétion, hover et navigation pour les design tokens DTCG (références cassées par thème, couleurs invalides, cycles) — côté JSON et côté CSS",
+  "description": "IntelliSense pour les design tokens DTCG : diagnostics (références cassées par thème, couleurs invalides, cycles), complétion, hover, navigation et couleurs, dans les JSON de tokens et le CSS",
   "version": "0.1.0",
   "publisher": "n0ku",
   "license": "MIT",
@@ -24,7 +24,12 @@
     "theme"
   ],
   "engines": { "vscode": "^1.90.0" },
-  "categories": ["Linters", "Programming Languages"],
+  "categories": ["Linters", "Programming Languages", "Visualization"],
+  "pricing": "Free",
+  "galleryBanner": {
+    "color": "#0d1117",
+    "theme": "dark"
+  },
   "main": "./dist/extension.js",
   "activationEvents": [
     "workspaceContains:tokens/**/*.json",
