@@ -1,7 +1,6 @@
 # DS Tokens IntelliSense
 
 [![CI](https://github.com/N0ku/DS-tokens-intellisense/actions/workflows/ci.yml/badge.svg)](https://github.com/N0ku/DS-tokens-intellisense/actions/workflows/ci.yml)
-![Marketplace](https://marketplace.visualstudio.com/items?itemName=n0ku.ds-tokens-intellisense)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 IntelliSense pour les design tokens au format [DTCG](https://design-tokens.github.io/community-group/format/) organisés en couches (core, semantic, component), tels que consommés par [Style Dictionary](https://styledictionary.com). L'extension attrape dans l'éditeur les erreurs que le build ne signale qu'à la fin, sans fichier ni ligne : référence morte, couleur invalide, cycle.
