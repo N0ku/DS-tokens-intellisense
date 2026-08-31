@@ -9,7 +9,7 @@ IntelliSense pour les design tokens au format [DTCG](https://design-tokens.githu
 
 ## Diagnostics
 
-Dans les fichiers de tokens (`tokens/**/*.json`, configurable) :
+Dans les fichiers de tokens (`**/tokens/**/*.json`, configurable) :
 
 | Problème | Sévérité |
 | --- | --- |
@@ -20,7 +20,7 @@ Dans les fichiers de tokens (`tokens/**/*.json`, configurable) :
 | Hex court (`#1855`), valide en CSS mais hors spec DTCG | Warning |
 | Alias vers un token d'un autre `$type` | Warning |
 
-Dans les fichiers CSS (hors `build/`) : toute `var(--space-999)` qui ne correspond ni à un token ni à une custom property déclarée est signalée.
+Dans les fichiers CSS (hors `build/` et `dist/`) : toute `var(--space-999)` qui ne correspond ni à un token ni à une custom property déclarée est signalée. Si aucun fichier de tokens n'a été indexé, l'extension n'a pas de vérité terrain : ces diagnostics CSS sont désactivés plutôt que de déclarer inexistante chaque `var()`.
 
 Les diagnostics se mettent à jour pendant la frappe, sans attendre la sauvegarde.
 
@@ -49,7 +49,7 @@ Le modèle reflète un build Style Dictionary multi-thèmes : les couches core e
 
 | Réglage | Défaut | Rôle |
 | --- | --- | --- |
-| `dsTokens.tokensGlob` | `tokens/**/*.json` | Où trouver les fichiers de tokens |
+| `dsTokens.tokensGlob` | `**/tokens/**/*.json` | Où trouver les fichiers de tokens |
 | `dsTokens.nameHighlights` | `true` | Surligner le nom des tokens couleur avec leur couleur |
 
 ## Licence
