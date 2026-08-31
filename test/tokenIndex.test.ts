@@ -1,12 +1,15 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { TokenIndex } from '../src/tokenIndex.ts';
-import { analyzeTokens, analyzeCss, extractCssDecls } from '../src/diagnostics.ts';
+import { analyzeTokens, analyzeCss, canLintCss, extractCssDecls } from '../src/diagnostics.ts';
 
-function fixtureIndex(overrides: Partial<Record<'core' | 'light' | 'dark' | 'component', string>> = {}) {
+function fixtureIndex(
+  overrides: Partial<Record<'core' | 'light' | 'dark' | 'component', string>> = {},
+  root = '/ws'
+) {
   const index = new TokenIndex();
   index.indexFile(
-    '/ws/tokens/core/color.json',
+    `${root}/tokens/core/color.json`,
     overrides.core ??
       JSON.stringify({
         color: {
@@ -19,21 +22,21 @@ function fixtureIndex(overrides: Partial<Record<'core' | 'light' | 'dark' | 'com
       })
   );
   index.indexFile(
-    '/ws/tokens/semantic/light.json',
+    `${root}/tokens/semantic/light.json`,
     overrides.light ??
       JSON.stringify({
         color: { action: { primary: { $value: '{color.blue.600}', $type: 'color' } } },
       })
   );
   index.indexFile(
-    '/ws/tokens/semantic/dark.json',
+    `${root}/tokens/semantic/dark.json`,
     overrides.dark ??
       JSON.stringify({
         color: { action: { primary: { $value: '{color.blue.500}', $type: 'color' } } },
       })
   );
   index.indexFile(
-    '/ws/tokens/component/button.json',
+    `${root}/tokens/component/button.json`,
     overrides.component ??
       JSON.stringify({
         button: {
@@ -146,4 +149,20 @@ test('analyse CSS : var inconnue → warning, var connue ou locale → ok', () =
   const findings = analyzeCss('/ws/demo.css', css, known);
   assert.equal(findings.length, 1);
   assert.match(findings[0].message, /--space-999/);
+});
+
+test('index vide → pas de lint CSS (pas de vérité terrain, pas de verdict)', () => {
+  assert.equal(canLintCss(0), false);
+  assert.equal(canLintCss(1), true);
+  assert.equal(canLintCss(fixtureIndex().entries().length), true);
+});
+
+test('tokens hors racine : les couches sont reconnues en sous-chemin', () => {
+  // Le glob par défaut est **/tokens/**/*.json : inferLayer doit reconnaître
+  // tokens/semantic et tokens/component ailleurs qu'à la racine du workspace.
+  const index = fixtureIndex({}, '/ws/example');
+  assert.deepEqual(index.themeNames(), ['light', 'dark']);
+  assert.equal(index.themesForFile('/ws/example/tokens/semantic/light.json')[0], 'light');
+  assert.ok(index.cssVars().has('--button-padding-x'));
+  assert.equal(index.resolve('button.background', 'dark').terminal, '#378ADD');
 });

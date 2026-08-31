@@ -96,7 +96,7 @@
       "properties": {
         "dsTokens.tokensGlob": {
           "type": "string",
-          "default": "tokens/**/*.json",
+          "default": "**/tokens/**/*.json",
           "description": "Glob des fichiers de design tokens, relatif à la racine du workspace."
         },
         "dsTokens.nameHighlights": {

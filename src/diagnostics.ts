@@ -141,6 +141,11 @@ export function extractCssDecls(text: string): Set<string> {
   return decls;
 }
 
+/** Sans aucun token indexé, l'extension n'a pas de vérité terrain : elle se tait. */
+export function canLintCss(tokenCount: number): boolean {
+  return tokenCount > 0;
+}
+
 export const CSS_VAR_USE_RE = /var\(\s*(--[A-Za-z0-9_-]+)/g;
 
 /** var(--xxx) ne correspondant ni à un token ni à une custom property connue. */
