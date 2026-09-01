@@ -3,55 +3,55 @@
 [![CI](https://github.com/N0ku/DS-tokens-intellisense/actions/workflows/ci.yml/badge.svg)](https://github.com/N0ku/DS-tokens-intellisense/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-IntelliSense pour les design tokens au format [DTCG](https://design-tokens.github.io/community-group/format/) organisés en couches (core, semantic, component), tels que consommés par [Style Dictionary](https://styledictionary.com). L'extension attrape dans l'éditeur les erreurs que le build ne signale qu'à la fin, sans fichier ni ligne : référence morte, couleur invalide, cycle.
+IntelliSense for [DTCG](https://design-tokens.github.io/community-group/format/) design tokens organized in layers (core, semantic, component), as consumed by [Style Dictionary](https://styledictionary.com). The extension catches errors in the editor that the build only reports at the end, without a file or line number: broken references, invalid colors, and cycles.
 
-![Diagnostics : référence introuvable avec suggestion, type incohérent](assets/screenshots/diagnostics.png)
+![Diagnostics: missing reference with a suggestion, incompatible type](assets/screenshots/diagnostics.png)
 
 ## Diagnostics
 
-Dans les fichiers de tokens (`**/tokens/**/*.json`, configurable) :
+In token files (`**/tokens/**/*.json`, configurable):
 
-| Problème | Sévérité |
+| Issue | Severity |
 | --- | --- |
-| Référence introuvable `{color.content.on-surface}` (avec suggestion si un nom proche existe) | Erreur |
-| Référence résolue dans un seul thème (light mais pas dark) | Warning |
-| Référence circulaire (la boucle est affichée dans le message) | Erreur |
-| Couleur invalide (`#18ZZZZ`) | Erreur |
-| Hex court (`#1855`), valide en CSS mais hors spec DTCG | Warning |
-| Alias vers un token d'un autre `$type` | Warning |
+| Missing reference `{color.content.on-surface}` (with a suggestion when a similar name exists) | Error |
+| Reference resolved in only one theme (light but not dark) | Warning |
+| Circular reference (the cycle is shown in the message) | Error |
+| Invalid color (`#18ZZZZ`) | Error |
+| Short hex (`#1855`), valid in CSS but outside the DTCG spec | Warning |
+| Alias to a token with a different `$type` | Warning |
 
-Dans les fichiers CSS (hors `build/` et `dist/`) : toute `var(--space-999)` qui ne correspond ni à un token ni à une custom property déclarée est signalée. Si aucun fichier de tokens n'a été indexé, l'extension n'a pas de vérité terrain : ces diagnostics CSS sont désactivés plutôt que de déclarer inexistante chaque `var()`.
+In CSS files (excluding `build/` and `dist/`): every `var(--space-999)` that matches neither a token nor a declared custom property is reported. If no token file has been indexed, the extension has no source of truth, so these CSS diagnostics are disabled instead of reporting every `var()` as missing.
 
-Les diagnostics se mettent à jour pendant la frappe, sans attendre la sauvegarde.
+Diagnostics update while you type, without waiting for a save.
 
-![Warning CSS sur une var() qui ne correspond à aucun token](assets/screenshots/css.png)
+![CSS warning for a var() that does not match any token](assets/screenshots/css.png)
 
 ## IntelliSense
 
-![Autocomplétion des tokens avec pastilles couleur](assets/screenshots/completion.png)
+![Token autocomplete with color swatches](assets/screenshots/completion.png)
 
-![Hover : chaîne de résolution par thème](assets/screenshots/hover.png)
+![Hover: resolution chain by theme](assets/screenshots/hover.png)
 
-- **Autocomplétion** des clés de tokens en tapant `{` dans un `$value`, filtrée par `$type`, avec pastilles couleur. Idem dans le CSS pour les `var(--...)` dérivées des tokens.
-- **Hover** : chaîne de résolution complète par thème, par exemple `{color.action.primary}` vers `{color.blue.600}` vers `#185FA5`.
-- **Go to definition** (F12, Cmd+clic) depuis un alias JSON ou une `var(--...)` CSS vers la définition du token. Les deux thèmes sont proposés pour la couche sémantique.
-- **Pastilles couleur** natives sur les tokens `$type: color` (le picker ne détruit pas les alias), et décoratives sur les `var(--color-...)` en CSS.
-- **Highlight** du nom des tokens couleur avec leur couleur résolue, texte en noir ou blanc selon la luminance (désactivable).
-- **Coloration sémantique** de la structure DTCG : groupes, noms de tokens, clés `$value` et `$type`, alias, chacun sa teinte.
+- **Autocomplete** for token keys when typing `{` in a `$value`, filtered by `$type`, with color swatches. The same applies in CSS for token-derived `var(--...)` values.
+- **Hover**: full resolution chain by theme, for example `{color.action.primary}` to `{color.blue.600}` to `#185FA5`.
+- **Go to Definition** (F12, Cmd+click) from a JSON alias or CSS `var(--...)` to the token definition. Both themes are offered for the semantic layer.
+- Native **color swatches** on `$type: color` tokens (the picker does not destroy aliases), plus decorative swatches on CSS `var(--color-...)` values.
+- **Highlighting** of color token names using their resolved color, with black or white text based on luminance (can be disabled).
+- **Semantic highlighting** for the DTCG structure: groups, token names, `$value` and `$type` keys, and aliases, each with its own color.
 
-![Highlight des noms de tokens couleur et coloration sémantique](assets/screenshots/highlights.png)
+![Color token name highlighting and semantic highlighting](assets/screenshots/highlights.png)
 
 ## Modèle de résolution multi-thèmes
 
-Le modèle reflète un build Style Dictionary multi-thèmes : les couches core et component sont partagées, chaque fichier `tokens/semantic/<theme>.tokens.json` forme un ensemble de résolution par thème. Que light et dark définissent les mêmes chemins est donc normal, pas une erreur ; en revanche un token défini dans un seul thème déclenche un warning sur ses usages.
+The model reflects a multi-theme Style Dictionary build: core and component layers are shared, and each `tokens/semantic/<theme>.tokens.json` file forms a theme-specific resolution set. It is therefore normal, not an error, for light and dark to define the same paths; however, a token defined in only one theme triggers a warning on its usages.
 
 ## Réglages
 
-| Réglage | Défaut | Rôle |
+| Setting | Default | Purpose |
 | --- | --- | --- |
-| `dsTokens.tokensGlob` | `**/tokens/**/*.json` | Où trouver les fichiers de tokens |
-| `dsTokens.nameHighlights` | `true` | Surligner le nom des tokens couleur avec leur couleur |
+| `dsTokens.tokensGlob` | `**/tokens/**/*.json` | Where to find token files |
+| `dsTokens.nameHighlights` | `true` | Highlight color token names with their color |
 
-## Licence
+## License
 
 [MIT](LICENSE)
